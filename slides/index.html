@@ -1,0 +1,427 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>HERE Studio</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+				<section data-background="img/hackforbetterdays.jpg" data-background-position="left">
+				</section>
+
+				<section data-background="img/superman.jpg" data-background-opacity="0.4">
+					<h1>Build Super Maps with HERE Studio</h1>
+				</section>
+
+				<section>
+					<h2>read.me</h2>
+					<ul>
+						<li>Raymond Camden</li>
+						<li>Lead Developer Evangelist for HERE</li>
+						<li>Enterprise Cat Demo Builder</li>
+						<li>Second best "Just Dance 2019"player (in my house)</li>
+						<li>Blogging at www.raymondcamden.com</li>
+						<li>Tweeting @raymondcamden</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>What is HERE Studio?</h2>
+					<ul>
+						<li class="fragment">A way to build maps using your data</li>
+						<li class="fragment">A "consumer" solution</li>
+						<li class="fragment">Works with Data Hub</li>
+						<li class="fragment">A developer solution (CLI + REST APIs)</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Did I say it was free?</h2>
+					<p class="fragment">
+						<i>Ok, it has a free tier (the lawyers made me add this...)</i>
+					</p>
+					<p class="fragment">
+					<a href="https://developer.here.com/pricing">https://developer.here.com/pricing</a>
+					</p>
+				</section>
+
+				<section>
+					<h2>Your Data</h2>
+					<ul>
+						<li class="fragment">Data that includes location (longitude and latitude)</li>
+						<li class="fragment">Data that includes "other stuff"</li>
+						<li class="fragment">GeoJSON, JSON, CSV (1M features max)</li>
+						<li class="fragment">Developer options support larger sets, and Shapefiles</li>
+					</ul>
+				</section>
+
+				<section>
+				<h2>GeoJSON Quick Primer</h2>
+				<ul>
+				<li class="fragment">JSON (simple text)</li>
+				<li class="fragment"><a href="https://geojson.org" target="_new">https://geojson.org</a></li>
+				<li class="fragment"><a href="https://tools.ietf.org/html/rfc7946
+" target="_new">RFC 7946</a></li>
+				</ul>
+				</section>
+
+				<section>
+				<h2>GeoJSON</h2>
+				<ul>
+					<li class="fragment">FeatureCollecton</li>
+					<ul>
+						<li class="fragment">Feature</li>
+						<ul class="fragment">
+							<li>Geometry object (point, polygon, line, etc)</li>
+							<li>Properties</li>
+						</ul>
+					</ul>
+				</ul>
+				</section>
+				
+				<section>
+				<h2>Example</h2>
+				<pre><code class="json">
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [ -90.0715, 29.9510 ]
+      },
+      "properties": {
+        "name": "Fred",
+    	"gender": "Male"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [ -92.7298, 30.7373 ]
+      },
+      "properties": {
+        "name": "Martha",
+    	"gender": "Female"
+      }
+    }
+  ]
+}				
+				</code></pre>
+				</section>
+
+				<section>
+				<h2>Testing GeoJSON</h2>
+				<ul>
+				<li class="fragment"><a href="https://github.com/jumpinjackie/vscode-map-preview
+" target="_new">VSCode Map Preview</a></li>
+				<li class="fragment"><a href="http://geojson.tools/" target="_new">GeoJSON Visualizer</a></li>
+				</ul>
+				</section>
+
+				<section>
+				<h2>HERE Studio</h2>
+				<ul>
+				<li class="fragment">No coding solution!</li>
+				<li class="fragment">But you may write code anyway. :)</li>
+				<li class="fragment">You add your data</li>
+				<li class="fragment">You make a project and use your data</li>
+				<li class="fragment">Style</li>
+				<li class="fragment">Share</li>
+				<li class="fragment"><a href="https://xyz.here.com/studio/" target="_new">https://xyz.here.com/studio/</a></li>
+				</ul>
+				</section>
+
+				<section data-background="img/catswalking.jpg" data-background-opacity="0.4">
+					<h1>Walkthrough</h1>
+				</section>
+
+				<section data-background="img/cat-keyboard.jpg" data-background-opacity="0.4">
+					<h1>"Developers"</h1>
+				</section>
+
+				<section>
+				<h2>Why?</h2>
+				<ul>
+				<li class="fragment">You want to use Studio, but your data isn't nice</li>
+				<li class="fragment">You like Studio, but want more options</li>
+				<li class="fragment">You have non-map but location-related ideas! (think Alexa)</li>
+				<li class="fragment">You need to do more</li>
+				</ul>
+				</section>
+
+				<section>
+				<h2>Data Hub</h2>
+				<ul>
+				<li class="fragment">Where your data for Studio lives</li>
+				<li class="fragment">Lets you use your data for whatever you want</li>
+				<li class="fragment">CLI</li>
+				<li class="fragment">REST APIs</li>
+				<li class="fragment"><a href="https://developer.here.com/documentation/studio/map_customization_suite_hlp/dev_guide/index.html" target="_new">Homepage</a></li>
+				</ul>
+				</section>
+
+				<section>
+				<h2>Data Hub Terms</h2>
+				<ul>
+				<li class="fragment">Spaces</li>
+				<li class="fragment">Features</li>
+				<li class="fragment">Tags</li>
+				</ul>
+				</section>
+
+				<section>
+				<h2>CLI</h2>
+				<ul>
+				<li class="fragment">Requires Node.js (but you don't have to know Node :)</li>
+				<li class="fragment"><code>npm install -g @here/cli</code></li>
+				<li class="fragment">One time: <code>here configure</code></li>
+				</ul>
+				</section>
+
+				<section>
+				<h2>CLI (cont)</h2>
+				<ul>
+				<li class="fragment">Work with spaces (CRUD)</li>
+				<li class="fragment">Work with tags, inspect spaces, data transformation</li>
+				<li class="fragment">Upload Shapefiles</li>
+				<li class="fragment">Stream large files</li>
+				</ul>
+				</section>
+
+				<section>
+					<h1>Demo</h1>
+				</section>
+
+				<section>
+				<h2>Tags</h2>
+				<ul>
+				<li class="fragment">Used for grouping/filtering</li>
+				<li class="fragment">Multiple tags can be assigned to a feature</li>
+				<li class="fragment">You can return features in a tag</li>
+				</ul>
+				</section>
+
+				<section>
+					<h1>Demo</h1>
+				</section>
+
+				<section>
+				<h2>Search</h2>
+				<ul>
+				<li class="fragment">More freedom than tag</li>
+				<li class="fragment">Can do things like &lt; and &gt;</li>
+				<li class="fragment">Can match a property against multiple values</li>
+				<li class="fragment">As well as multiple conditions (AND)</li>
+				<li class="fragment">Filter the results</li>
+				</ul>
+				</section>
+
+				<section>
+				<h2>Search (Cont)</h2>
+				<ul>
+				<li class="fragment">On by default</li>
+				<li class="fragment">Modify what is searchable (paid feature)</li>
+				<li class="fragment"><a href="https://www.here.xyz/api/devguide/propertiessearch/" target="_new">Docs</a></li>
+				</ul>
+				</section>
+
+				<section>
+					<h1>Demo</h1>
+				</section>
+
+				<section>
+				<h2>REST</h2>
+				<ul>
+				<li class="fragment">Everything I've shown you, but in HTTP form</li>
+				<li class="fragment">A bit more...</li>
+				<li class="fragment">Token-based security</li>
+				<li class="fragment"><a href="https://developer.here.com/documentation/studio/api-reference-swagger.html" target="_new">API Docs</a></li>
+				</ul>
+				</section>
+
+				<section>
+				<pre><code class="language-javascript" data-trim>
+(async () => { 
+
+  const fetch = require('node-fetch');
+  const root = 'https://xyz.api.here.com/hub/';
+  const token = process.env.TOKEN;
+
+  spaceId = 'someSpace';
+
+  let features = await fetch(root + `spaces/${spaceId}/iterate`, {
+    headers: { Authorization: `Bearer ${token}` }
+  })
+  .then(res => res.json());
+
+  console.log(features);
+
+})();
+
+				</code></pre>
+				</section>
+
+				<section>
+				<h2>Customized Maps</h2>
+				<ul>
+				<li class="fragment">JavaScript Maps - <a href="https://developer.here.com/products/maps" target="_new">Site</a></li>
+				<li class="fragment">Customize Look and Feel</li>
+				<li class="fragment">Customize interactivity</li>
+				<li class="fragment">Customize markers</li>
+				<li class="fragment">And so on and so on...</li>
+				</ul>
+				</section>
+
+				<section>
+				<h2>The Basics</h2>
+				<ul>
+				<li class="fragment">Add JS/CSS libs</li>				
+				</ul>
+				</section>
+
+				<section>
+				<pre><code class="language-html" data-trim>
+<script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
+<script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
+<script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
+<script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
+<link href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" rel="stylesheet" />
+				</code></pre>
+				</section>
+
+				<section>
+				<h2>The Basics</h2>
+				<ul>
+				<li>Add JS/CSS libs</li>
+				<li class="fragment">Add a map object (centered on so and so)</li>
+				</ul>
+				</section>
+
+				<section>
+				<pre class="stretch"><code class="language-javascript" data-trim>
+var platform = new H.service.Platform({
+	apikey: 'api key'
+});
+
+// Obtain the default map types from the platform object:
+var defaultLayers = platform.createDefaultLayers();
+
+var map = new H.Map(
+	document.getElementById('mapContainer'),
+	defaultLayers.vector.normal.map,
+	{
+		zoom: 3,
+		center: { lat: 38.7984, lng: -96.3944 },
+		pixelRatio: window.devicePixelRatio || 1
+	}
+);
+
+var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+
+var ui = H.ui.UI.createDefault(map, defaultLayers);
+				</code></pre>
+				</section>
+
+				<section>
+				<h2>The Basics</h2>
+				<ul>
+				<li>Add JS/CSS libs</li>
+				<li>Add a map object (centered on so and so)</li>
+				<li class="fragment">Add Data Hub</li>
+				</ul>
+				</section>
+
+				<section>
+				<pre><code class="language-javascript" data-trim>
+const service = platform.getXYZService({
+	token: 'data hub specific token',
+});
+
+const XYZ_SPACE = '73KBVoD8';
+const mySpaceProvider = new H.service.xyz.Provider(service, XYZ_SPACE, {});
+
+const mySpaceLayer = new H.map.layer.TileLayer(mySpaceProvider);
+// add a layer to the map
+map.addLayer(mySpaceLayer);				
+				</code></pre>
+				</section>
+
+				<section>
+					<h1>Demo</h1>
+				</section>
+				
+				<section>
+				<h2>Data Hub Add On</h2>
+				<ul>
+				<li class="fragment">Increases transfer + storage</li>
+				<li class="fragment">Better search control</li>
+				<li class="fragment">Virtual Spaces</li>
+				<li class="fragment">Hexbins</li>
+				<li class="fragment">Schema validation</li>
+				<li class="fragment">Activity Log</li>
+				<li class="fragment">Rules-based tagging</li>
+				<li class="fragment"><a href="https://developer.here.com/tutorials/using-the-data-hub-cli-to-create-hexbins-from-csv/" target="_new">Tutorial 1</a> and
+				<a href="https://developer.here.com/tutorials/using-the-data-hub-cli-for-advanced-searching/" target="_new">Tutorial 2</a></li>
+				</ul>
+				</section>
+
+				<section>
+				<h2>What else?</h2>
+				<ul>
+				<li><a href="https://developer.here.com/products/platform/studio" target="_new">Main site</a></li>
+				<li><a href="https://developer.here.com/documentation/studio" target="_new">Main Docs</a></li>
+				<li><a href="https://developer.here.com/blog" target="_new">Blog</a></li>
+				<li><a href="https://t.her.is/Slack" target="_new">Slack</a></li>
+				</ul>
+				</section>
+
+				<section data-background="img/cat_qa.png" data-background-opacity="0.4">
+					<h1>Questions</h1>
+					<p>reach me at @raymondcamden</p>
+				</section>
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				hash: true,
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/highlight/highlight.js' },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+			Reveal.configure({ slideNumber: 'c/t' });
+		</script>
+	</body>
+</html>
