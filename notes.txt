@@ -1,0 +1,27 @@
+
+
+https://www.raymondcamden.com/2019/08/14/my-thoughts-on-documentation
+
+"hidden" stuff that is elsewhere, API urls example
+
+make doc changes easier on people
+
+read as if you know nothing
+
+windows vs osx
+
+
+TODO:
+code samples
+
+animated gifs
+save the jokes
+do not require a login
+let me help
+hire/beg for an editor
+
+formatting
+
+links:
+https://readthedocs.org/
+https://www.writethedocs.org/
